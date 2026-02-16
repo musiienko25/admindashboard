@@ -22,23 +22,35 @@ export class ProductsStore {
 
   async loadCategories() {
     try {
-      this.categories = await productsApi.getCategories();
+      const categories = await productsApi.getCategories();
+      runInAction(() => {
+        this.categories = categories;
+      });
     } catch {
-      this.categories = [];
+      runInAction(() => {
+        this.categories = [];
+      });
     }
   }
 
   async loadBrands() {
     try {
-      this.brands = await productsApi.getBrands();
+      const brands = await productsApi.getBrands();
+      runInAction(() => {
+        this.brands = brands;
+      });
     } catch {
-      this.brands = [];
+      runInAction(() => {
+        this.brands = [];
+      });
     }
   }
 
   async fetchProducts(filters: ProductFilters) {
-    this.isLoading = true;
-    this.error = null;
+    runInAction(() => {
+      this.isLoading = true;
+      this.error = null;
+    });
     try {
       const hasClientFilter = filters.brand;
       const apiFilters = { ...filters };
