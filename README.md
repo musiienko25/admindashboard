@@ -1,57 +1,57 @@
 # Admin Dashboard
 
-Проста адмін панель з використанням [DummyJSON API](https://dummyjson.com/docs).
+A simple admin panel built with [DummyJSON API](https://dummyjson.com/docs).
 
-## Стек
+## Stack
 
-- **Vite** - збірка
-- **TypeScript** - типізація
+- **Vite** - build tool
+- **TypeScript** - type safety
 - **React** - UI
-- **MobX** - управління станом
-- **Tailwind CSS** - стилі
-- **Shadcn/Radix** - UI компоненти
-- **Zod** - валідація
-- **react-hook-form** - форми
+- **MobX** - state management
+- **Tailwind CSS** - styling
+- **Shadcn/Radix** - UI components
+- **Zod** - validation
+- **react-hook-form** - forms
 
-## Архітектура
+## Architecture
 
-Проєкт використовує [Feature-Sliced Design](https://feature-sliced.design):
+The project uses [Feature-Sliced Design](https://feature-sliced.design):
 
 ```
 src/
-├── app/           # Ініціалізація, роутинг, провайдери
-├── pages/         # Сторінки (auth, products)
-├── features/      # Фічі (create, edit, delete product)
-├── entities/      # Сущності (user, product)
-├── shared/        # Спільний код (api, lib)
-└── components/    # UI компоненти (Shadcn)
+├── app/           # Initialization, routing, providers
+├── pages/         # Pages (auth, products)
+├── features/      # Features (create, edit, delete product)
+├── entities/      # Entities (user, product)
+├── shared/        # Shared code (api, lib)
+└── components/    # UI components (Shadcn)
 ```
 
-## Функціонал
+## Features
 
-- **Авторизація** - логін зі збереженням токену, logout
-- **Список товарів** - таблиця з пошуком, сортуванням, фільтрацією
-- **Створення товару** - модалка з формою
-- **Редагування товару** - модалка
-- **Видалення товару** - модалка підтвердження
-- **Query-параметри** - search, filter, sort, take, skip в URL
+- **Authentication** - login with token storage, logout
+- **Products list** - table with search, sorting, filtering
+- **Create product** - modal with form
+- **Edit product** - modal
+- **Delete product** - confirmation modal
+- **Query parameters** - search, filter, sort, take, skip in URL
 
-## Запуск
+## Getting Started
 
 ```bash
 npm install
 npm run dev
 ```
 
-Для збірки:
+To build:
 
 ```bash
 npm run build
 ```
 
-## Тестові облікові дані
+## Test Credentials
 
-Використовуйте будь-які credentials з [dummyjson.com/users](https://dummyjson.com/users), наприклад:
+Use any credentials from [dummyjson.com/users](https://dummyjson.com/users), for example:
 
 - Username: `emilys`
 - Password: `emilyspass`
