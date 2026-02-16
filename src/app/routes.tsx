@@ -4,7 +4,11 @@ import { LoginPage } from '@/pages/auth/ui/login-page';
 import { ProductsPage } from '@/pages/products/ui/products-page';
 import { authStore } from '@/entities/user/model';
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
+const ProtectedRoute = observer(function ProtectedRoute({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   if (!authStore.isInitialized) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -16,7 +20,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" replace />;
   }
   return <>{children}</>;
-}
+});
 
 export const AppRoutes = observer(function AppRoutes() {
   return (

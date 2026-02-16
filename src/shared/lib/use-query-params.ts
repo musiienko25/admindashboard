@@ -26,8 +26,10 @@ export function useTableQueryParams() {
 
   const params = useMemo((): TableQueryParams => {
     const q = searchParams.get('q') ?? DEFAULT_PARAMS.q;
-    const category = searchParams.get('category') ?? DEFAULT_PARAMS.category;
-    const brand = searchParams.get('brand') ?? DEFAULT_PARAMS.brand;
+    const rawCategory = searchParams.get('category') ?? DEFAULT_PARAMS.category;
+    const category = rawCategory === '__all__' ? '' : rawCategory;
+    const rawBrand = searchParams.get('brand') ?? DEFAULT_PARAMS.brand;
+    const brand = rawBrand === '__all__' ? '' : rawBrand;
     const sortBy = searchParams.get('sortBy') ?? DEFAULT_PARAMS.sortBy;
     const order = (searchParams.get('order') as 'asc' | 'desc') ?? DEFAULT_PARAMS.order;
     const limit = Number(searchParams.get('limit')) || DEFAULT_PARAMS.limit;

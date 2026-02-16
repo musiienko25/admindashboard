@@ -17,7 +17,7 @@ export async function apiFetch<T>(
     ...options,
     headers: {
       ...getAuthHeaders(),
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     },
   });
 

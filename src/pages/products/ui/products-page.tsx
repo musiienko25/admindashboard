@@ -134,14 +134,16 @@ export const ProductsPage = observer(function ProductsPage() {
             <div className="w-[180px] space-y-2">
               <Label>Category</Label>
               <Select
-                value={params.category}
-                onValueChange={(v) => updateParams({ category: v, skip: 0 })}
+                value={params.category || '__all__'}
+                onValueChange={(v) =>
+                  updateParams({ category: v === '__all__' ? '' : v, skip: 0 })
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="All categories" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All categories</SelectItem>
+                  <SelectItem value="__all__">All categories</SelectItem>
                   {productsStore.categories.map((c) => (
                     <SelectItem key={c} value={c}>
                       {c}
@@ -153,14 +155,16 @@ export const ProductsPage = observer(function ProductsPage() {
             <div className="w-[180px] space-y-2">
               <Label>Brand</Label>
               <Select
-                value={params.brand}
-                onValueChange={(v) => updateParams({ brand: v, skip: 0 })}
+                value={params.brand || '__all__'}
+                onValueChange={(v) =>
+                  updateParams({ brand: v === '__all__' ? '' : v, skip: 0 })
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="All brands" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All brands</SelectItem>
+                  <SelectItem value="__all__">All brands</SelectItem>
                   {productsStore.brands.map((b) => (
                     <SelectItem key={b} value={b}>
                       {b}

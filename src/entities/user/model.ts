@@ -34,15 +34,7 @@ export class AuthStore {
     try {
       const response = await authApi.login({ username, password });
       this.setToken(response.accessToken);
-      this.user = {
-        id: response.id,
-        username: response.username,
-        email: response.email,
-        firstName: response.firstName,
-        lastName: response.lastName,
-        gender: response.gender,
-        image: response.image,
-      };
+      this.user = await authApi.me();
       return true;
     } catch {
       return false;
@@ -59,7 +51,10 @@ export class AuthStore {
     }
     this.isLoading = true;
     try {
-      this.user = await authApi.me();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      this.user = await authApi.me(controller.signal);
+      clearTimeout(timeoutId);
     } catch {
       this.logout();
     } finally {
