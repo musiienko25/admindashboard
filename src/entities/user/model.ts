@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { authApi, type User } from './api';
 
 const TOKEN_KEY = 'accessToken';
@@ -30,36 +30,54 @@ export class AuthStore {
   }
 
   async login(username: string, password: string) {
-    this.isLoading = true;
+    runInAction(() => {
+      this.isLoading = true;
+    });
     try {
       const response = await authApi.login({ username, password });
       this.setToken(response.accessToken);
-      this.user = await authApi.me();
+      const user = await authApi.me();
+      runInAction(() => {
+        this.user = user;
+      });
       return true;
     } catch {
       return false;
     } finally {
-      this.isLoading = false;
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
   }
 
   async checkAuth() {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) {
-      this.isInitialized = true;
+      runInAction(() => {
+        this.isInitialized = true;
+      });
       return;
     }
-    this.isLoading = true;
+    runInAction(() => {
+      this.isLoading = true;
+    });
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000);
-      this.user = await authApi.me(controller.signal);
+      const user = await authApi.me(controller.signal);
       clearTimeout(timeoutId);
+      runInAction(() => {
+        this.user = user;
+      });
     } catch {
-      this.logout();
+      runInAction(() => {
+        this.logout();
+      });
     } finally {
-      this.isLoading = false;
-      this.isInitialized = true;
+      runInAction(() => {
+        this.isLoading = false;
+        this.isInitialized = true;
+      });
     }
   }
 }
