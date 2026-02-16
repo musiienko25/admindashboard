@@ -1,8 +1,10 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { LoginPage } from '@/pages/auth/ui/login-page';
-import { ProductsPage } from '@/pages/products/ui/products-page';
 import { authStore } from '@/entities/user/model';
+
+const LoginPage = lazy(() => import('@/pages/auth/ui/login-page'));
+const ProductsPage = lazy(() => import('@/pages/products/ui/products-page'));
 
 const ProtectedRoute = observer(function ProtectedRoute({
   children,
@@ -24,18 +26,26 @@ const ProtectedRoute = observer(function ProtectedRoute({
 
 export const AppRoutes = observer(function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route
-        path="/products"
-        element={
-          <ProtectedRoute>
-            <ProductsPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/" element={<Navigate to="/products" replace />} />
-      <Route path="*" element={<Navigate to="/products" replace />} />
-    </Routes>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <p>Loading...</p>
+        </div>
+      }
+    >
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/products"
+          element={
+            <ProtectedRoute>
+              <ProductsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/" element={<Navigate to="/products" replace />} />
+        <Route path="*" element={<Navigate to="/products" replace />} />
+      </Routes>
+    </Suspense>
   );
 });

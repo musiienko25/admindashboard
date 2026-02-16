@@ -28,7 +28,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export const ProductsPage = observer(function ProductsPage() {
+const ProductsPage = observer(function ProductsPage() {
   const navigate = useNavigate();
   const { params, updateParams, apiFilters } = useTableQueryParams();
   const [createOpen, setCreateOpen] = useState(false);
@@ -302,3 +302,5 @@ export const ProductsPage = observer(function ProductsPage() {
     </div>
   );
 });
+
+export default ProductsPage;

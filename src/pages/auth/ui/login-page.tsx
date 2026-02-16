@@ -16,14 +16,16 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
-export const LoginPage = observer(function LoginPage() {
+const LoginPage = observer(function LoginPage() {
   const navigate = useNavigate();
+  const isInitialized = authStore.isInitialized;
+  const isAuthenticated = authStore.isAuthenticated;
 
   useEffect(() => {
-    if (authStore.isInitialized && authStore.isAuthenticated) {
+    if (isInitialized && isAuthenticated) {
       navigate('/products', { replace: true });
     }
-  }, [authStore.isInitialized, authStore.isAuthenticated, navigate]);
+  }, [isInitialized, isAuthenticated, navigate]);
 
   const {
     register,
@@ -82,3 +84,5 @@ export const LoginPage = observer(function LoginPage() {
     </div>
   );
 });
+
+export default LoginPage;
