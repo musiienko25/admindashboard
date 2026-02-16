@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Проста адмін панель з використанням [DummyJSON API](https://dummyjson.com/docs).
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Vite** - збірка
+- **TypeScript** - типізація
+- **React** - UI
+- **MobX** - управління станом
+- **Tailwind CSS** - стилі
+- **Shadcn/Radix** - UI компоненти
+- **Zod** - валідація
+- **react-hook-form** - форми
 
-## React Compiler
+## Архітектура
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Проєкт використовує [Feature-Sliced Design](https://feature-sliced.design):
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── app/           # Ініціалізація, роутинг, провайдери
+├── pages/         # Сторінки (auth, products)
+├── features/      # Фічі (create, edit, delete product)
+├── entities/      # Сущності (user, product)
+├── shared/        # Спільний код (api, lib)
+└── components/    # UI компоненти (Shadcn)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Функціонал
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Авторизація** - логін зі збереженням токену, logout
+- **Список товарів** - таблиця з пошуком, сортуванням, фільтрацією
+- **Створення товару** - модалка з формою
+- **Редагування товару** - модалка
+- **Видалення товару** - модалка підтвердження
+- **Query-параметри** - search, filter, sort, take, skip в URL
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Запуск
+
+```bash
+npm install
+npm run dev
 ```
+
+Для збірки:
+
+```bash
+npm run build
+```
+
+## Тестові облікові дані
+
+Використовуйте будь-які credentials з [dummyjson.com/users](https://dummyjson.com/users), наприклад:
+
+- Username: `emilys`
+- Password: `emilyspass`
